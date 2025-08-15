@@ -1,4 +1,6 @@
 // src/components/Projects.tsx
+
+
 import { motion, type Variants } from "framer-motion";
 
 type Project = { title: string; description: string; link?: string; image: string };
