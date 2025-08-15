@@ -11,28 +11,28 @@ const projects: Project[] = [
     description:
       "ML-powered crop prediction using soil & weather data; top accuracy with Random Forest.",
     link: "https://github.com/007fury/Crop_ML",
-    image: "public/Img/crop.jpg",
+    image: "/Img/projects/crop.jpg",
   },
   {
     title: "Credit Card Default Prediction (Taiwan)",
     description:
       "Clustering + binary & multi-class classification, SHAP explainability, GA optimisation.",
     link: "https://github.com/007fury/creditcard_ml",
-    image: "public/Img/credit.jpeg",
+    image: "/Img/projects/credit.jpeg",
   },
   {
     title: "Ethical Society Simulation – Thrive Island",
     description:
       "Python simulation of wealth distribution, access, and governance trade‑offs (1% vs 99%).",
     link: "https://github.com/007fury/ETHICAL_SOCIETY",
-    image: "public/Img/ethics].jpg",
+    image: "/Img/projects/ethics].jpg",
   },
   {
     title: "Traffic Congestion Analysis – India",
     description:
       "Clustering, classification & visual analytics to locate hotspots and forecast flow.",
     link: "https://github.com/007fury/",
-    image: "public/Img/trafiic.webp",
+    image: "/Img/projects/trafiic.webp",
   },
   {
     title: "Hospital Management System",
