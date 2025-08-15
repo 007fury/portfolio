@@ -9,7 +9,7 @@ const experience = [
       "Generated and managed leads in Excel to support business growth.",
       "Designed and maintained client websites using HTML, CSS (Bootstrap), JavaScript, MySQL, and WIX.",
     ],
-    proof:" public/phoenix Infotech .pdf",
+    proof:"public/verify/phoenix Infotech .pdf",
   },
   {
     role: "Laravel Developer Intern",
@@ -19,7 +19,7 @@ const experience = [
       "Built a hospital management system in Laravel and MySQL.",
       "Included appointment booking, user account access, blog modules.",
     ],
-    proof: "/public/sudaksh internship certificate-1.pdf",
+    proof: "public/verify/sudaksh internship certificate-1.pdf",
   },
   {
     role: "Data Analytics Intern",
@@ -29,7 +29,7 @@ const experience = [
       "Credit card fraud detection using Python & Kaggle dataset.",
       "Performed EDA using Pandas, NumPy, Matplotlib, Seaborn.",
     ],
-    proof: "public/IBM SkillsBuild Data Analytics Final Certificate (1).pdf",
+    proof: "public/verify/IBM SkillsBuild Data Analytics Final Certificate (1).pdf",
   },
 ];
 
