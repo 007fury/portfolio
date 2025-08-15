@@ -1,0 +1,25 @@
+/* Tailwind imports */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Global background with gradient overlay */
+body {
+  background: 
+    linear-gradient(to bottom right, rgba(255,255,255,0.95), rgba(230,245,255,0.95)),
+    url('/public/datascience-bg.jpg'); /* Replace with your image */
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* Reduce spacing between sections */
+section {
+  padding-top: 3rem;  /* ~48px */
+  padding-bottom: 3rem;
+}

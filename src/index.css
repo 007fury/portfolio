@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth scroll */
+html { scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif; /* Google Font */ }
+
+/* Global background: gradient + your image (put bg-ds.jpg in /public) */
+body {
+  background:
+    linear-gradient(to bottom, #ffffff, #f7fbff 45%, #f6faff),
+    url("/bg-ds.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* Light geometric grid overlay for a data‑science vibe */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px);
+  background-size: 36px 36px, 36px 36px;
+  pointer-events: none;
+  mask-image: radial-gradient(1100px 650px at 50% -10%, rgba(0,0,0,0.6), transparent 70%);
+}
+
+/* Reusable utilities for consistent spacing & layout */
+@layer utilities {
+  .section { @apply scroll-mt-24 py-14 md:py-16; }
+  .container { @apply max-w-6xl mx-auto px-6; }
+  .card { @apply rounded-xl border border-blue-200/60 bg-white/80 backdrop-blur-sm shadow-sm; }
+  .h2 { @apply text-3xl font-bold text-blue-700 border-b-4 border-blue-300/70 inline-block mb-8; }
+}
