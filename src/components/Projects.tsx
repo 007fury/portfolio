@@ -39,7 +39,7 @@ const projects: Project[] = [
     description:
       "Laravel & MySQL platform with appointments, patient records, and doctor management.",
     // link intentionally empty for now (shows 'Coming soon')
-    image: "public/Img/hms.jpg",
+    image: "/Img/projects/hms.jpg",
   },
 ];
 
