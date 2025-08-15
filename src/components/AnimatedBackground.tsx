@@ -1,19 +1,12 @@
 import { useEffect, useRef } from "react";
 
-/**
- * AnimatedBackground
- * A lightweight canvas animation (60–120 particles) with connecting lines.
- * - Fixed behind the page (no pointer events)
- * - Auto-scales for devicePixelRatio
- * - Pauses when tab is hidden (browser optimization)
- */
 type Props = {
   particleCount?: number;   // default 90
   maxSpeed?: number;        // default 0.35 (px/frame @ 1x)
   linkDistance?: number;    // default 110 (px @ 1x)
-  dotColor?: string;        // default "rgba(37, 99, 235, 0.65)"  (blue-600 @ ~65%)
-  lineColor?: string;       // default "rgba(37, 99, 235, 0.12)" (subtle)
-  backgroundFade?: string;  // optional gradient overlay on the whole canvas
+  dotColor?: string;        // default "rgba(37, 99, 235, 0.65)"
+  lineColor?: string;       // default "rgba(37, 99, 235, 0.12)"
+  backgroundFade?: string;  // CSS gradient for wrapper div
 };
 
 export default function AnimatedBackground({
@@ -61,30 +54,28 @@ export default function AnimatedBackground({
       }
     };
 
+    const rgbaWithAlpha = (color: string, alpha: number) => {
+      // supports rgb(...) or rgba(...)
+      const m = color.match(/rgba?\(([^)]+)\)/);
+      if (!m) return color; // fallback if not rgb/rgba
+      const parts = m[1].split(",").map((s) => s.trim());
+      const [r, g, b] = parts.slice(0, 3).map(Number);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+
     const step = () => {
-      // clear with optional soft gradient overlay
-      if (backgroundFade) {
-        // paint a transparent gradient “film” once per frame
-        const gEl = document.createElement("canvas");
-        const gCtx = gEl.getContext("2d")!;
-        gEl.width = 1; gEl.height = 1; // we’re not using gEl, just force GC-safe
-        // faster: clearRect then lines; CSS gradient handled by container div
-        ctx.clearRect(0, 0, state.w, state.h);
-      } else {
-        ctx.clearRect(0, 0, state.w, state.h);
-      }
+      // canvas is transparent; gradient is handled by the wrapper div
+      ctx.clearRect(0, 0, state.w, state.h);
 
       // move
       for (const p of state.particles) {
         p.x += p.vx;
         p.y += p.vy;
-
-        // bounce at edges
         if (p.x <= 0 || p.x >= state.w) p.vx *= -1;
         if (p.y <= 0 || p.y >= state.h) p.vy *= -1;
       }
 
-      // draw links
+      // links
       ctx.beginPath();
       for (let i = 0; i < state.particles.length; i++) {
         const a = state.particles[i];
@@ -94,19 +85,8 @@ export default function AnimatedBackground({
           const dy = a.y - b.y;
           const dist = Math.hypot(dx, dy);
           if (dist < linkDistance) {
-            const alpha = 1 - dist / linkDistance;
-            ctx.strokeStyle = lineColor.replace(
-              /rgba?\(([^)]+)\)/,
-              (m) => {
-                // if user passed rgb(), convert to rgba with alpha; if rgba, override final alpha
-                const parts = m
-                  .replace(/rgba?\(|\)/g, "")
-                  .split(",")
-                  .map((s) => s.trim());
-                const [r, g, b] = parts.map(Number);
-                return `rgba(${r}, ${g}, ${b}, ${Math.min(0.6, alpha)})`;
-              }
-            );
+            const alpha = Math.min(0.6, 1 - dist / linkDistance);
+            ctx.strokeStyle = rgbaWithAlpha(lineColor, alpha);
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
           }
@@ -115,7 +95,7 @@ export default function AnimatedBackground({
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      // draw dots
+      // dots
       for (const p of state.particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
@@ -137,14 +117,12 @@ export default function AnimatedBackground({
     };
   }, [particleCount, maxSpeed, linkDistance, dotColor, lineColor, backgroundFade]);
 
-  // A wrapper div holds the CSS gradient overlay; the canvas is transparent
+  // Gradient overlay via wrapper; canvas stays transparent
   return (
     <div
       aria-hidden
       className="fixed inset-0 -z-10 pointer-events-none"
-      style={{
-        background: backgroundFade,
-      }}
+      style={{ background: backgroundFade }}
     >
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
